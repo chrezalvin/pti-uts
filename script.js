@@ -14,7 +14,18 @@ $(function(){
         <h3>Player List:</h3>
         ${playerListRender.join('\n')}
         `);
+
+        if(players.length > 3){
+            inputPlayer.attr("disabled", true);
+            inputPlayer.attr("placeholder", "maximum player reached!");
+            addPlayerBtn.attr("disabled", true);
+        }
     }
+
+    inputPlayer.on("keydown", (e) => {
+        if(e.key === "Enter")
+            addPlayerBtn.trigger("click");
+    })
 
     addPlayerBtn.on("click", () => {
         if(inputPlayer.val() === "") return;
