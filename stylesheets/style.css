@@ -12,6 +12,6 @@
 }
 
 #playerList{
-    height: 25vh;
-    overflow-y: hidden;
+    height: 30vh;
+    /* overflow-y: hidden; */
 }

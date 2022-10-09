@@ -9,10 +9,18 @@ $(function(){
 
     // updates everything, used on all event when it's done
     function bringUpdate(){
-        const playerListRender = players.map((player) => `<li>${player}</li>`)
+        const playerListRender = players.map((player, index) => `<tr><th>#${index + 1}</th><td>${player}</td></tr>`)
         $("#playerList").html(`
-        <h3>Player List:</h3>
-        ${playerListRender.join('\n')}
+        <table class="table table-light">
+        <thead>
+            <tr>
+                <th colspan="2" class="text-center">Player List</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${playerListRender.join('\n')}
+        </tbody>
+        </table>
         `);
 
         if(players.length > 3){
@@ -56,6 +64,6 @@ $(function(){
             return;
         }
 
-        window.location.href = 'game.html';
+        window.location.href = `game.html?name=${players.join(',')}`;
     })
 })
