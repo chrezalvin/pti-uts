@@ -1,11 +1,39 @@
+function firstSecondMaker(count){
+    switch(count){
+        case 1: return "1st";
+        case 2: return "2nd";
+        case 3: return "3rd";
+        default: return `${count}th`;
+    }
+}
+
+function hideBootstrap(){
+
+}
+
+function flipPage(){
+    const lobbyPage = $("#lobby");
+    const playPage = $("#play");
+
+    if(lobbyPage.hasClass("visually-hidden")){
+        lobbyPage.removeClass("visually-hidden");
+        playPage.addClass("visually-hidden");
+    }
+    else{
+        playPage.removeClass("visually-hidden");
+        lobbyPage.addClass("visually-hidden");
+    }
+}
+
 // shorthand for doc ready
 $(function(){
 
     const inputPlayer = $("#playerName");
-    const addPlayerBtn = $("#addPlayerBtn")
-    const playGameBtn = $("#playGameBtn")
+    const addPlayerBtn = $("#addPlayerBtn");
+    const playGameBtn = $("#playGameBtn");
 
     const players = [];
+    const playerCountUI = $("#playerCount");
 
     // updates everything, used on all event when it's done
     function bringUpdate(){
@@ -43,6 +71,7 @@ $(function(){
     })
 
     playGameBtn.on("click", () => {
+        flipPage();
         console.log("game play"); // TODO
     })
 })

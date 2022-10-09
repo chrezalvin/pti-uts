@@ -13,5 +13,5 @@
 
 #playerList{
     height: 20vh;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
