@@ -21,11 +21,20 @@ $(function(){
             inputPlayer.attr("placeholder", "maximum player reached!");
             addPlayerBtn.attr("disabled", true);
         }
+
+        switch(playercnt){
+            case 1: $("#noplayer").html("2nd Player"); break;
+            case 2: $("#noplayer").html("3rd Player"); break;
+            case 3: $("#noplayer").html("4th Player"); break;
+            default: $("#noplayer").html("Maxed!"); break;
+        }
     }
 
     inputPlayer.on("keydown", (e) => {
         if(e.key === "Enter")
             addPlayerBtn.trigger("click");
+
+        console.log(e.currentTarget.value.length)
     })
 
     addPlayerBtn.on("click", () => {
@@ -39,19 +48,8 @@ $(function(){
         players.push(inputPlayer.val());
         inputPlayer.val("");
         inputPlayer.trigger("focus");
+
         ++playercnt;
-        if (playercnt == 1) {
-            $("#noplayer").html("2nd Player");
-        }
-        if (playercnt == 2) {
-            $("#noplayer").html("3rd Player");
-        }
-        if (playercnt == 3) {
-            $("#noplayer").html("4th Player");
-        }
-        if (playercnt == 4) {
-            $("#noplayer").html("Maxed!");
-        }
         bringUpdate();
     })
 
