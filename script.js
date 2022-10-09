@@ -6,7 +6,6 @@ $(function(){
     const playGameBtn = $("#playGameBtn")
 
     const players = [];
-    let playercnt = 0;
 
     // updates everything, used on all event when it's done
     function bringUpdate(){
@@ -22,7 +21,7 @@ $(function(){
             addPlayerBtn.attr("disabled", true);
         }
 
-        switch(playercnt){
+        switch(players.length){
             case 1: $("#noplayer").html("2nd Player"); break;
             case 2: $("#noplayer").html("3rd Player"); break;
             case 3: $("#noplayer").html("4th Player"); break;
@@ -33,8 +32,6 @@ $(function(){
     inputPlayer.on("keydown", (e) => {
         if(e.key === "Enter")
             addPlayerBtn.trigger("click");
-
-        console.log(e.currentTarget.value.length)
     })
 
     addPlayerBtn.on("click", () => {
@@ -49,16 +46,16 @@ $(function(){
         inputPlayer.val("");
         inputPlayer.trigger("focus");
 
-        ++playercnt;
         bringUpdate();
     })
 
 
     playGameBtn.on("click", () => {
-        if (playercnt >= 1) {
-            window.location.href = 'game.html';
-        return false;
+        if(players.length === 0){
+            alert("pemain tidak ada, harap tulis minimal satu nama pemain!");
+            return;
         }
-        
+
+        window.location.href = 'game.html';
     })
 })
