@@ -6,23 +6,28 @@ function loadPlayers(){
 }
 
 function decideTurn(previousTurn, playerLength){
-    if(!playerLength !== 1)
+    if(playerLength !== 1)
         return (previousTurn + 1) % playerLength;
     else return 1;
 }
 
 $(function(){
-    const players = loadPlayers();
+    let players = loadPlayers();
     if(!players){
         alert("nama player gagal di load, mengembalikan anda ke halaman login");
         window.location.href = "index.html";
         return;
     }
 
+    players = players.map(name => {return {name: name, boneCount: 0}});
+
     let playerTurn = 0;
     const playerTurnDisplay = $("#playerTurnDisplay");
     const playerListUI = $("#playerList");
     const volumeIcon = $("#volumeIcon");
+    const spike = $("#spike");
+
+    const bone = $(".bone");
 
     // updates everything, used on all event when it's done
     function bringUpdate(){
@@ -30,15 +35,16 @@ $(function(){
             return;
 
         const playerList = players.map((p, index) => {
-            return `<tr>
-                <td ${index === playerTurn ? 'class="bg-green"': ""}>
-                    <b>${p}</b>
+            return `<tr ${index === playerTurn ? 'class="bg-green"': ""}>
+                <td>
+                    <b>${p.name}</b>
                 </td>
+                <td>${p.boneCount}</td>
             </tr>`
         });
         playerListUI.html(`${playerList.join("\n")}`);
 
-        playerTurnDisplay.html(`${players[playerTurn]}'s Turn`);
+        playerTurnDisplay.html(`${players[playerTurn].name}'s Turn`);
     }
 
     volumeIcon.on("click", () =>{
@@ -53,6 +59,20 @@ $(function(){
             volumeIcon.addClass(mute);
             volumeIcon.removeClass(up);
         }
+
+        bringUpdate();
+    })
+
+    bone.on("click", function(e){
+        const rng = Math.random();
+        if(rng < (0.25 / players.length)){
+            alert(`You woke up spike!, now he's angy :(`);
+        }
+
+        ++players[playerTurn].boneCount;
+        playerTurn = decideTurn(playerTurn, players.length);
+        this.remove();
+        bringUpdate()
     })
 
     bringUpdate();

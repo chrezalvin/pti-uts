@@ -4,7 +4,7 @@ $(function(){
     const inputPlayer = $("#playerName");
     const addPlayerBtn = $("#addPlayerBtn")
     const playGameBtn = $("#playGameBtn")
-    const noPlayerDisplay = $("noPlayer");
+    const noPlayerDisplay = $("#noplayer");
 
     const players = [];
 
@@ -19,13 +19,15 @@ $(function(){
             addPlayerBtn.attr("disabled", true);
         }
 
-        switch(players.length){
-            case 0: noPlayerDisplay.html("1st player"); break;
-            case 1: noPlayerDisplay.html("2nd Player"); break;
-            case 2: noPlayerDisplay.html("3rd Player"); break;
-            case 3: noPlayerDisplay.html("4th Player"); break;
-            default: noPlayerDisplay.html("Maxed!"); break;
+        let string = "1st";
+        switch(players.length + 1){
+            case 1: string = "1st"; break;
+            case 2: string = "2nd"; break;
+            case 3: string = "3rd"; break;
+            case 4: string = "4th"; break;
+            default: string = "Maxed"; break;
         }
+        noPlayerDisplay.html(`${string} Player`);
     }
 
     inputPlayer.on("keydown", (e) => {
