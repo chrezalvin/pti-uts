@@ -1,12 +1,23 @@
+function loadPlayers(){
+    let getVal = new URLSearchParams(window.location.search);
+    if(getVal.get("name") === null) 
+        return false;
+    return getVal.get("name").split(',');
+}
+
 // shorthand for doc ready
 $(function(){
-
     const inputPlayer = $("#playerName");
     const addPlayerBtn = $("#addPlayerBtn")
     const playGameBtn = $("#playGameBtn")
     const noPlayerDisplay = $("#noplayer");
 
     const players = [];
+    const loadedPlayers = loadPlayers();
+
+    if(loadedPlayers){
+        loadedPlayers.forEach(player => players.push(player));
+    }
 
     // updates everything, used on all event when it's done
     function bringUpdate(){
@@ -45,6 +56,7 @@ $(function(){
         }
         
         players.push(inputPlayer.val());
+        $("#pencilWrite")[0].play();
         inputPlayer.val("");
         inputPlayer.trigger("focus");
 
@@ -60,4 +72,6 @@ $(function(){
 
         window.location.href = `game.html?name=${players.join(',')}`;
     })
+
+    bringUpdate();
 })
