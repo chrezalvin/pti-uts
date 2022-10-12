@@ -8,5 +8,12 @@
  - Stephen Tanuwijaya (00000042628)
  
  ## Aturan Permainan
-  - 
+  - Klik tulang dan jangan bangunkan spike!
+  - untuk setiap permainan, sebanyak 5% (round up) dari jumlah tulang dapat membangunkan spike
+  - pemain yang membangunkan spike pertama kali kalah
+
+## Link Github
+  https://github.com/chrezalvin/pti-uts
+
+
  

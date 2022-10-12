@@ -40,6 +40,8 @@ $(function(){
     const volumeIcon = $("#volumeIcon");
     const spike = $("#spike");
     const backBtn = $("#backBtn");
+    const boneRoom = $("#boneRoom");
+    const restartBtn = $("#restart");
 
     const bone = $(".bone");
 
@@ -49,7 +51,15 @@ $(function(){
     function bringUpdate(){
         if(!players) return;
 
-        if(gameOverFlag) return;
+        if(gameOverFlag) {
+            $("#gameOverOptions").removeClass("visually-hidden");
+            return;
+        }
+        else{
+            const gameOverOptions = $("#gameOverOptions");
+            if(!gameOverOptions.hasClass("visually-hidden"))
+                gameOverOptions.addClass("visually-hidden");
+        }
 
         const playerList = players.map((p, index) => {
             return `<tr ${index === playerTurn ? 'class="bg-green"': ""}>
@@ -64,16 +74,50 @@ $(function(){
         playerTurnDisplay.html(`${players[playerTurn].name}'s Turn`);
     }
 
+    function generateBones(amount){
+        const myArr = [];
+        const randomizer = Array(Math.ceil(amount * 5 / 100)).fill(0).map(_ => Math.ceil(Math.random() * amount));
+        console.log(randomizer)
+        for(let iii = 0; iii < amount; ++iii){
+            myArr.push(`
+            <div class="col-1">
+                <img src="./assets/bone-icon.svg" class="bone ${randomizer.find(v => v === iii) ? "wake-up": ""}" style="height: 40px;">
+            </div>`)
+        }
+
+        boneRoom.html(myArr.join('\n'));
+
+        const bone = $(".bone");
+
+        bone.on("mouseover", () =>{
+            playSound("#pop");
+        })
+    
+        bone.on("click", function(e){
+            if(gameOverFlag) return;
+
+            playSound("#boneCollect");
+            if(this.classList.contains("wake-up")){
+                gameOver();
+                return;
+            }
+    
+            ++players[playerTurn].boneCount;
+            playerTurn = decideTurn(playerTurn, players.length);
+            this.remove();
+            bringUpdate()
+        })
+    }
+
+    generateBones(10 * players.length);
+
     function gameOver(){
         gameOverFlag = true;
         playerTurnDisplay.html(`${players[playerTurn].name} has woken up Spike!`);
         bone.off("click");
         spike.attr("src", "./assets/dog-awake.jpg");
         playSound("#dogBark");
-    }
-
-    function gameWin(){
-
+        bringUpdate();
     }
 
     volumeIcon.on("click", () =>{
@@ -98,29 +142,25 @@ $(function(){
         bringUpdate();
     })
 
-    bone.on("mouseover", () =>{
-        playSound("#pop");
-    })
-
-    bone.on("click", function(e){
-        playSound("#boneCollect");
-        const rng = Math.random();
-        if(rng < (0.25 / players.length)){
-            gameOver();
-            return;
-        }
-
-        ++players[playerTurn].boneCount;
-        playerTurn = decideTurn(playerTurn, players.length);
-        this.remove();
-        bringUpdate()
-    })
-
+    // waking up spike by clicking
     spike.on("click", () => gameOver())
+
+    restartBtn.on("click", ()=> {
+        players = players.map(name => {return {...name, boneCount: 0}});
+        boneRoom.html("");
+        generateBones(10 * players.length);
+        spike.attr("src", "./assets/dog-sleep.gif");
+        gameOverFlag = false;
+        bringUpdate();
+    })
 
     backBtn.on("click", () =>{
         window.location.href = `index.html?name=${players.map(player => player.name).join(',')}`;
     })
+    $("#backMenu").on("click", () => {
+        window.location.href = `index.html`;
+    })
+
 
     bringUpdate();
 })
