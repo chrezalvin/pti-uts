@@ -11,7 +11,11 @@
     min-height: 75vh;
 }
 
-#playerList{
+#tablePlayer{
     height: 30vh;
-    /* overflow-y: hidden; */
+}
+
+
+.list-player:hover{
+    background-color: green;
 }
