@@ -18,20 +18,25 @@
         <!-- JQuery script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        <!-- <script>
+        <script>
+            
+
             $(function(){
                 const playerAmount = 4;
-                const layerCount = [16, 20, 24, 28];
+                // const layerCount = [16, 20, 24, 28];
                 
                 const myArr = [];
-                for(let iii = 0; iii < 12 + 4 * playerAmount; ++iii)
+                const randomizer = Array(Math.ceil(playerAmount * 1.5)).fill(0).map(_ => Math.ceil(Math.random() * 10 * playerAmount));
+                console.log(randomizer)
+                for(let iii = 0; iii < 10 * playerAmount; ++iii){
                     myArr.push(`
-                    <div class="col-2">
-                        <div class="p-2 bg-danger">a</div>
+                    <div class="col-1 ${randomizer.find(v => v === iii) ? "bg-danger": ""}">
+                        <img src="./assets/bone-icon.svg" class="img-fluid">
                     </div>`)
-                $("#row").html(myArr.join('\n'));
+                }
+                $("#boneRoom").html(myArr.join('\n'));
             })
-        </script> -->
+        </script>
 
         <style>
             .col-*{
@@ -39,73 +44,15 @@
             }
         </style>
 
+        <link rel="stylesheet" href="stylesheets/game.css">
+
     <title>Document</title>
 </head>
 <body>
-    <div class="container-fluid p-0 m-0">
-        <div class="row g-1" id="row">
-            <div class="col-3">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-2">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-2">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-2">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-3">
-                <div class="bg-danger">a</div>
-            </div>
-        </div>
-        <div class="row g-1" id="row">
-            <div class="col-3 container-fluid">
-                <div class="row g-1 d-flex justify-content-center">
-                    <div class="col-8">
-                        <div class="bg-dark">a</div>
-                    </div>
-                    <div class="col-8">
-                        <div class="bg-dark">a</div>
-                    </div>
-                    <div class="col-8">
-                        <div class="bg-dark">a</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="bg-primary">a</div>
-            </div>
-            <div class="col-3 container-fluid">
-                <div class="row g-1 d-flex justify-content-center">
-                    <div class="col-8">
-                        <div class="bg-dark">a</div>
-                    </div>
-                    <div class="col-8">
-                        <div class="bg-dark">a</div>
-                    </div>
-                    <div class="col-8">
-                        <div class="bg-dark">a</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row g-1" id="row">
-            <div class="col-3">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-2">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-2">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-2">
-                <div class="bg-danger">a</div>
-            </div>
-            <div class="col-3">
-                <div class="bg-danger">a</div>
+    <div class="container-fluid">
+        <div class="row g-1" id="boneRoom">
+            <div class="col-1">
+                <img src="./assets/bone-icon.svg" class="img-fluid">
             </div>
         </div>
     </div>
