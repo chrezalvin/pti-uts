@@ -9,7 +9,7 @@
  
  ## Aturan Permainan
   - Klik tulang dan jangan bangunkan spike!
-  - untuk setiap permainan, sebanyak 5% dari jumlah tulang dapat membangunkan spike
+  - untuk setiap permainan, sebanyak 5% (round up) dari jumlah tulang dapat membangunkan spike
   - pemain yang membangunkan spike pertama kali kalah
 
 ## Link Github
